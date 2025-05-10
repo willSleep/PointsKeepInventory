@@ -1,7 +1,6 @@
 # Compiled files
 /target/
 /bin/
-/libs/
 *.jar
 
 # IDE
