@@ -1,0 +1,27 @@
+name: PointsKeepInventory
+version: '1.0-SNAPSHOT'
+main: com.willSleep.PointsKeepInventory
+api-version: '1.20'
+authors: [ willSleep ]
+description: 积分死亡不掉落
+website: https://github.com/willSleep/PointsKeepInventory
+depend: [Essentials]
+
+permissions:
+  pki.ADMIN:
+    description: "管理员权限组"
+    default: op
+
+  pki.PLAYER:
+    description: "玩家权限组"
+    default: true
+
+commands:
+  pki:
+    description: "PointsKeepInventory 功能命令集"
+    permission: pki.PLAYER
+  pki-manage:
+    description: "PointsKeepInventory 管理命令集"
+    permission: pki.ADMIN
+    permission-massage: "§c你没有权限使用此指令!"
+    aliases: pkim

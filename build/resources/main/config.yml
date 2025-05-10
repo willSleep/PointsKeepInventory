@@ -1,0 +1,24 @@
+# 经济系统
+economic-system:
+  # 在线时长和积分的等价交换系数(mins/per-point)
+  price: 5
+  # 周期侦听延迟(分钟)
+  listen-frequency: 10
+  # 每次死亡不掉落消耗的积分数
+  points-per-keep-inventory: 2
+
+# 死亡不掉落范围
+item-type:
+  keepInventory: true
+  keepLevel: true
+
+  # !!! 重要提示：无论如何设置死亡不掉落范围,若玩家开启了死亡不掉落并且符兑换,其掉落物实体会被立即清理!
+  # !!! 因此，请小心操作item-type中的内容, 至少确保keepInventory在正式部署时被开启(除非有特殊要求)
+  # !!! item-type.keepInventory选项将在正式版被删除
+
+others:
+  # 是否开启死亡不掉落的缺省值
+  default-status: true
+  # 排除AFK玩家
+  # 要求安装EssentialsX插件,否则该功能无法正确启用
+  exclude-afk: true
