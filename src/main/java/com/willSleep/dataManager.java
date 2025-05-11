@@ -65,12 +65,21 @@ public class dataManager {
     }
 
     /**
+     * 增加玩家在线时长
+     * @param player 玩家对象
+     * @param amount 增量(minutes)
+     */
+    public void addOnlineMinutes(Player player, int amount) {
+        int currentOnlineMinutes = getOnlineMinutes(player);
+        setOnlineMinutes(player, currentOnlineMinutes + amount);
+    }
+
+    /**
      * 设置玩家在线时常
      * @param player 玩家对象
      * @param amount 增量
      */
     public void setOnlineMinutes(Player player, int amount) {
-        int currentOnlineMinutes = getOnlineMinutes(player);
         player.getPersistentDataContainer().set(
                 onlineMinutesKey,
                 PersistentDataType.INTEGER,

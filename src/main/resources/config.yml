@@ -12,7 +12,7 @@ item-type:
   keepInventory: true
   keepLevel: true
 
-  # !!! 重要提示：无论如何设置死亡不掉落范围,若玩家开启了死亡不掉落并且符兑换,其掉落物实体会被立即清理!
+  # !!! 重要提示：无论如何设置死亡不掉落范围,若玩家开启了死亡不掉落并符合兑换条件,其掉落物实体会被立即清理!
   # !!! 因此，请小心操作item-type中的内容, 至少确保keepInventory在正式部署时被开启(除非有特殊要求)
   # !!! item-type.keepInventory选项将在正式版被删除
 

@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class PointsKeepInventory extends JavaPlugin {
 
-    private BukkitTask checkTask;
+    private RewardTask rewardTask;
 
     public int price;   // 在线时长和积分的等价交换系数
     public int listen_frequency;   // 周期侦听延迟(分钟)
@@ -50,8 +50,9 @@ public final class PointsKeepInventory extends JavaPlugin {
         // 生成配置文件
         saveDefaultConfig();
 
-        // 周期性刷新数据
-        startRewardTask();
+        // 周期性运行业务逻辑
+        rewardTask = new RewardTask(this);
+        rewardTask.start();
 
         // 为指令注册执行
         getServer().getPluginCommand("pki-manage").setExecutor(new CommandManager(this));
@@ -63,45 +64,12 @@ public final class PointsKeepInventory extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (checkTask != null) checkTask.cancel();   // 安全退出侦听任务
+       if (rewardTask != null) {
+           rewardTask.cancel();
+       }
 
         getLogger().info("积分死亡不掉落已禁用.");
 
-    }
-
-    /**
-     * 周期性刷新数据
-     */
-    // HACK: 后续将startRewardTask隔离到单独的类并安全重写cancel等方法
-    private void startRewardTask() {
-        checkTask = Bukkit.getScheduler().runTaskTimer(this,() -> {    // 使用Lambda表达式启动runTaskTimer
-            for (Player player: Bukkit.getOnlinePlayers()) {
-                if (excludeAfk) {
-                    if (ExternalAPI.isPlayerAFK(player)) continue;
-                }
-                dataManager.setOnlineMinutes(player, dataManager.getOnlineMinutes(player) + listen_frequency);
-                // TODO: 考虑增加一个addOnlineMinutes专门和setOnlineMinutes区别开
-                if (dataManager.getOnlineMinutes(player) >= price) {
-                    int earnedPoints = dataManager.getOnlineMinutes(player) / price;
-                    if (earnedPoints > 0) {
-                        dataManager.addPoints(player, earnedPoints);
-                        dataManager.setOnlineMinutes(player,
-                                dataManager.getOnlineMinutes(player) % price);
-
-                        player.sendMessage(String.format(
-                                "§a[PKI]+%d 积分 (余额: %d)",
-                                earnedPoints,
-                                dataManager.getPoints(player)
-                                ));
-                    }
-                }
-
-
-            }
-
-            getLogger().info("DEBUG: UPDATE SUCCESSFULLY");
-        }, 0L, 20L * 60 * listen_frequency);   // 没有初始延迟(Long类型), 20tick * 秒数
-        // 批注: 后期可尝试移入多线程;
     }
 
     /**
