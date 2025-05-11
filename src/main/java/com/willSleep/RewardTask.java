@@ -13,11 +13,6 @@ public class RewardTask {
 
     }
 
-    // 重载配置时调用
-    public void reloadConfig() {
-        // TODO: 热重载配置文件
-    }
-
     // 启动/重启任务
     public void start() {
         cancel();   // 取消旧任务
@@ -42,6 +37,12 @@ public class RewardTask {
                             player,
                             plugin.dataManager.getOnlineMinutes(player) % plugin.price
                     );
+
+                    player.sendMessage(String.format(
+                            "§a[PKI]+%d 积分 (余额: %d)",
+                            earnedPoints,
+                            plugin.dataManager.getPoints(player)
+                    ));
                 }
             }
 

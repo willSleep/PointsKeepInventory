@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class PointsKeepInventory extends JavaPlugin {
 
-    private RewardTask rewardTask;
+    public RewardTask rewardTask;
 
     public int price;   // 在线时长和积分的等价交换系数
     public int listen_frequency;   // 周期侦听延迟(分钟)

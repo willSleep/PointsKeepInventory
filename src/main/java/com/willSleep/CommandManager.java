@@ -34,7 +34,8 @@ public class CommandManager implements CommandExecutor {
 
         if (args.length == 0 || (args.length == 1 && args[0].equals("help"))) {
             p.sendMessage(ChatColor.GRAY + "pki指令集帮助(暂时啥都木有)");
-            // TODO: 写完帮助
+            p.sendMessage(ChatColor.YELLOW + "enable " + ChatColor.GREEN + "启用死亡不掉落");
+            p.sendMessage(ChatColor.YELLOW + "disable" + ChatColor.GREEN + "禁用死亡不掉落");
         }
 
         if (args.length == 1 && args[0].equals("enable")) {
@@ -43,35 +44,37 @@ public class CommandManager implements CommandExecutor {
                     "§a[PKI]死亡不掉落已启用 (剩余积分: %d)",
                     plugin.dataManager.getPoints(p)
             ));
+            return true;
         }
 
         if (args.length == 1 && args[0].equals("disable")) {
             plugin.dataManager.setPKStatus(p, false);
             p.sendMessage("§a[PKI]死亡不掉落已禁用");
+            return true;
         }
 
-        return true;
+        return false;
     }
 
-    // FIXME: 主要问题是startRewardTask()创建的对象并没有被正确重载，导致了一些问题
     private boolean executePKIM(CommandSender sender, String[] args) {
+        Player p = (Player) sender;
         if (args.length == 0 || (args.length == 1 && args[0].equals("help"))) {
-            Player p = (Player) sender;
-            p.sendMessage(ChatColor.GRAY + "pki-manage指令集帮助(暂时啥都木有)");
+            p.sendMessage(ChatColor.GREEN + "pki-manage指令集帮助(暂时啥都木有)");
             // TODO: 写完帮助
         }
 
+        // FIXME: 主要问题是startRewardTask()创建的对象并没有被正确重载，导致了一些问题
         if (args.length == 1 && args[0].equals("reload")) {
-//            plugin.reloadConfig();
-//            plugin.initializeConfig();
-//            Player p = (Player) sender;
-//            p.sendMessage(ChatColor.GREEN + "[PKIM]重新加载配置文件: Done.");
-            Player p = (Player) sender;
-            p.sendMessage(ChatColor.RED + "在此版本的PKI上, 这个功能暂时不可用.");
+            plugin.reloadConfig();
+            plugin.initializeConfig();
+            plugin.rewardTask.start();   // 重启任务
+            p.sendMessage(Color.GREEN + "配置文件已重载 :)");
+
+            return true;
 
         }
 
-        return true;
+        return false;
     }
 
 }
