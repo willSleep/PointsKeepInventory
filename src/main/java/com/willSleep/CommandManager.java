@@ -33,7 +33,7 @@ public class CommandManager implements CommandExecutor {
         Player p = (Player) sender;
 
         if (args.length == 0 || (args.length == 1 && args[0].equals("help"))) {
-            p.sendMessage(ChatColor.GRAY + "pki指令集帮助(暂时啥都木有)");
+            p.sendMessage(ChatColor.GRAY + "pki指令集帮助");
             p.sendMessage(ChatColor.YELLOW + "enable " + ChatColor.GREEN + "启用死亡不掉落");
             p.sendMessage(ChatColor.YELLOW + "disable" + ChatColor.GREEN + "禁用死亡不掉落");
         }
@@ -59,16 +59,19 @@ public class CommandManager implements CommandExecutor {
     private boolean executePKIM(CommandSender sender, String[] args) {
         Player p = (Player) sender;
         if (args.length == 0 || (args.length == 1 && args[0].equals("help"))) {
-            p.sendMessage(ChatColor.GREEN + "pki-manage指令集帮助(暂时啥都木有)");
-            // TODO: 写完帮助
+            p.sendMessage(ChatColor.GRAY + "pkim指令集帮助");
+            p.sendMessage(ChatColor.YELLOW + "reload " + ChatColor.GREEN + "热重载配置文件");
         }
 
-        // FIXME: 主要问题是startRewardTask()创建的对象并没有被正确重载，导致了一些问题
         if (args.length == 1 && args[0].equals("reload")) {
             plugin.reloadConfig();
             plugin.initializeConfig();
             plugin.rewardTask.start();   // 重启任务
-            p.sendMessage(Color.GREEN + "配置文件已重载 :)");
+            plugin.rewardTask.isFirstRule = true;
+            p.sendMessage(ChatColor.GREEN + "配置文件已重载 :)");
+
+            // FIXME: 由于重新启动任务，导致玩家会白嫖一轮时间。解决方案是添加补偿修正函数，在每次修正后补偿修正
+
 
             return true;
 

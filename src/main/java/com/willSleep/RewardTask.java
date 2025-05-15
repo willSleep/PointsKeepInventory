@@ -8,6 +8,9 @@ public class RewardTask {
     private BukkitTask task;
     private final PointsKeepInventory plugin;
 
+    public boolean isFirstRule;   // 是否是任务被创建(或者重新创建)后的第一轮
+    // 如果isFirstRule为真则忽略一次加计时(防止热重载后或者服务器重启后直接加一轮时间的现象)
+
     public RewardTask(PointsKeepInventory plugin) {
         this.plugin = plugin;
 
@@ -27,6 +30,11 @@ public class RewardTask {
     private void run() {
         for (Player player: Bukkit.getOnlinePlayers()) {
             if (plugin.excludeAfk && ExternalAPI.isPlayerAFK(player)) continue;
+            if (isFirstRule) {
+                // 忽略一次加计时
+                isFirstRule = false;
+                continue;
+            }
 
             plugin.dataManager.addOnlineMinutes(player, plugin.listen_frequency);
             if (plugin.dataManager.getOnlineMinutes(player) >= plugin.price) {

@@ -1,11 +1,10 @@
 name: PointsKeepInventory
-version: '1.0.2-SNAPSHOT'
+version: '1.1.0'
 main: com.willSleep.PointsKeepInventory
 api-version: '1.20'
 authors: [ willSleep ]
 description: 积分死亡不掉落
 website: https://github.com/willSleep/PointsKeepInventory
-depend: [Essentials]
 
 permissions:
   pki.ADMIN:

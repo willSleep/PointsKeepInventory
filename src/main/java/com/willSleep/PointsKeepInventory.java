@@ -52,6 +52,7 @@ public final class PointsKeepInventory extends JavaPlugin {
 
         // 周期性运行业务逻辑
         rewardTask = new RewardTask(this);
+        rewardTask.isFirstRule = true;
         rewardTask.start();
 
         // 为指令注册执行
