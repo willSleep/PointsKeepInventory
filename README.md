@@ -11,7 +11,11 @@
 3. 重启服务器
 
 ## 依赖
-PKI 依赖插件 [EssentialsX API](https://github.com/EssentialsX/Essentials) 实现玩家AFK监听功能，请一并安装此插件。
+本插件没有任何必要依赖。
+
+如果打开了配置文件中others.exclude-afk则需要安装Essentials插件。若打开该项但没有安装Essentials，它将被当作false处理。
+
+手动编译时请将CompileOnly的内容放入libs/下。
 
 ## 配置说明
 配置文件位于 plugins/PointsKeepInventory/config.yml，按照注释进行配置即可。
