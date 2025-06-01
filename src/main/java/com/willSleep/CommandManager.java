@@ -39,7 +39,7 @@ public class CommandManager implements CommandExecutor {
         }
 
         if (args.length == 1 && args[0].equals("enable")) {
-            plugin.dataManager.setPKStatus(p, true);
+            plugin.dataManager.setPKIStatus(p, true);
             p.sendMessage(String.format(
                     "§a[PKI]死亡不掉落已启用 (剩余积分: %d)",
                     plugin.dataManager.getPoints(p)
@@ -48,7 +48,7 @@ public class CommandManager implements CommandExecutor {
         }
 
         if (args.length == 1 && args[0].equals("disable")) {
-            plugin.dataManager.setPKStatus(p, false);
+            plugin.dataManager.setPKIStatus(p, false);
             p.sendMessage("§a[PKI]死亡不掉落已禁用");
             return true;
         }
@@ -69,9 +69,6 @@ public class CommandManager implements CommandExecutor {
             plugin.rewardTask.start();   // 重启任务
             plugin.rewardTask.isFirstRule = true;
             p.sendMessage(ChatColor.GREEN + "配置文件已重载 :)");
-
-            // FIXME: 由于重新启动任务，导致玩家会白嫖一轮时间。解决方案是添加补偿修正函数，在每次修正后补偿修正
-
 
             return true;
 

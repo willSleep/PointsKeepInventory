@@ -1,3 +1,6 @@
+# PKI插件配置文件
+# 配置全是作者乱写方便测试的！因此，请依据注释自行更改所有配置！
+
 # 经济系统
 economic-system:
   # 在线时长和积分的等价交换系数(mins/per-point)
@@ -9,19 +12,29 @@ economic-system:
   # 每次死亡不掉落消耗的积分数
   points-per-keep-inventory: 2
 
+  # 每日积分上限
+  daily-limit:
+    enable: true
+    limit: 1
+
 # 死亡不掉落范围
 item-type:
-  keepInventory: true
   keepLevel: true
-
-  # !!! 重要提示：无论如何设置死亡不掉落范围,若玩家开启了死亡不掉落并符合兑换条件,其掉落物实体会被立即清理!
-  # !!! 因此，请小心操作item-type中的内容, 至少确保keepInventory在正式部署时被开启(除非有特殊要求)
-  # !!! item-type.keepInventory选项将在正式版被删除
 
 others:
   # 是否开启死亡不掉落的缺省值
   default-status: true
 
+  # 排除列表
+  exclusion-list:
+    # 是否启用
+    enable: true
+
   # 排除AFK玩家
   # 要求安装EssentialsX插件,否则该功能无法正确启用
   exclude-afk: true
+
+# ！！！注意！！！
+# 管理员应确保任何玩家的积分取值范围不得越过java标准int类型的取值范围
+# 即不得越过范围-2^31 - 2^31-1
+# 后续将进行优化

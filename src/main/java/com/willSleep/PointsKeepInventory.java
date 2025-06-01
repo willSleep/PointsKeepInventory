@@ -9,7 +9,8 @@ import net.kyori.adventure.text.Component;
 import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
-// TODO: 添加“每日积分上限”功能
+// TODO: 写完“排除列表”功能
+// TODO: 在RewardTask.java的run函数中添加新的一天开始的检测
 
 public final class PointsKeepInventory extends JavaPlugin {
 
@@ -18,10 +19,12 @@ public final class PointsKeepInventory extends JavaPlugin {
     public int price;   // 在线时长和积分的等价交换系数
     public int listen_frequency;   // 周期侦听延迟(分钟)
     public int  points_per_keep_inventory;   // 每次死亡不掉落消耗的积分数
-    public boolean keepInventory;   // 保留物品栏
     public boolean keepLevel;   // 保留等级
     public boolean default_status;   // 是否开启死亡不掉落的缺省值
-    public boolean excludeAfk;
+    public boolean isExcludeAfk;   // 是否排除afk玩家
+    public boolean isEnableExclusionList;   // 是否开启排除列表
+    public boolean isEnableDailyLimit;   // 是否开启每日积分上限
+    public int dailyLimit;
 
     public dataManager dataManager;
 
@@ -30,10 +33,13 @@ public final class PointsKeepInventory extends JavaPlugin {
         price = this.getConfig().getInt("economic-system.price");
         listen_frequency = this.getConfig().getInt("economic-system.listen-frequency");
         points_per_keep_inventory = this.getConfig().getInt("economic-system.points-per-keep-inventory");
-        keepInventory = this.getConfig().getBoolean("item-type.keepInventory");
         keepLevel = this.getConfig().getBoolean("item-type.keepLevel");
         default_status = this.getConfig().getBoolean("others.default-status");
-        excludeAfk = this.getConfig().getBoolean("others.exclude-afk");
+        isExcludeAfk = this.getConfig().getBoolean("others.exclude-afk");
+        isEnableExclusionList = this.getConfig().getBoolean("others.exclusion-list.enable");
+        isEnableExclusionList = this.getConfig().getBoolean("economic-system.daily-limit.enable");
+        isEnableDailyLimit = this.getConfig().getBoolean("economic-system.daily-limit.enable");
+        dailyLimit = this.getConfig().getInt("economic-system.daily-limit.limit");
     }
 
 
@@ -71,16 +77,6 @@ public final class PointsKeepInventory extends JavaPlugin {
 
         getLogger().info("积分死亡不掉落已禁用.");
 
-    }
-
-    /**
-     * 检查两个时间戳是否是同一天
-     * @param time1 时间戳1
-     * @param time2 时间戳2
-     * @return 比较结果
-     */
-    private boolean isSameDay(long time1, long time2) {
-        return TimeUnit.MILLISECONDS.toDays(time1) == TimeUnit.MILLISECONDS.toDays(time2);
     }
 
 }

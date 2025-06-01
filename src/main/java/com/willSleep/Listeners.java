@@ -28,7 +28,7 @@ public class Listeners implements Listener {
         // TODO: 添加功能: 为开启死亡不掉落但没有余额的玩家打印通知
         // TODO: 添加功能: 在余额不足时自动关闭死亡不掉落并通知玩家
         if (plugin.dataManager.getPKStatus(player) && plugin.dataManager.getPoints(player) >= plugin.points_per_keep_inventory) {
-            if (plugin.keepInventory) event.setKeepInventory(true);
+            event.setKeepInventory(true);
             if (plugin.keepLevel) event.setKeepLevel(true);
             event.getDrops().clear();
             event.setDroppedExp(0);
