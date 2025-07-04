@@ -1,13 +1,6 @@
 package com.willSleep;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
-import net.kyori.adventure.text.Component;
-
-import java.awt.*;
-import java.util.concurrent.TimeUnit;
 
 // TODO: 写完“排除列表”功能
 // TODO: 在RewardTask.java的run函数中添加新的一天开始的检测
@@ -22,7 +15,6 @@ public final class PointsKeepInventory extends JavaPlugin {
     public boolean keepLevel;   // 保留等级
     public boolean default_status;   // 是否开启死亡不掉落的缺省值
     public boolean isExcludeAfk;   // 是否排除afk玩家
-    public boolean isEnableExclusionList;   // 是否开启排除列表
     public boolean isEnableDailyLimit;   // 是否开启每日积分上限
     public int dailyLimit;
 
@@ -36,8 +28,6 @@ public final class PointsKeepInventory extends JavaPlugin {
         keepLevel = this.getConfig().getBoolean("item-type.keepLevel");
         default_status = this.getConfig().getBoolean("others.default-status");
         isExcludeAfk = this.getConfig().getBoolean("others.exclude-afk");
-        isEnableExclusionList = this.getConfig().getBoolean("others.exclusion-list.enable");
-        isEnableExclusionList = this.getConfig().getBoolean("economic-system.daily-limit.enable");
         isEnableDailyLimit = this.getConfig().getBoolean("economic-system.daily-limit.enable");
         dailyLimit = this.getConfig().getInt("economic-system.daily-limit.limit");
     }

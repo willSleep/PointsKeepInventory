@@ -16,11 +16,11 @@ public class Listeners implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        // TODO: 添加为新玩家初始化数据、检查日期的方法
-
-    }
+    // 以下被注释的代码在后续可能被删除,视测试结果而定
+//    @EventHandler
+//    public void onPlayerJoin(PlayerJoinEvent event) {
+//        // TODO: 添加为新玩家初始化数据、检查日期的方法
+//    }
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {

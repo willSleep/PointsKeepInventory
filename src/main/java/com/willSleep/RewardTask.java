@@ -36,6 +36,7 @@ public class RewardTask {
         for (Player player: Bukkit.getOnlinePlayers()) {
             if (isFirstRule) {
                 // 忽略一次加计时
+                // 这是为了忽略服务器重启后/热重载后无故为玩家加一次积分
                 isFirstRule = false;
                 continue;
             }
@@ -45,8 +46,8 @@ public class RewardTask {
                 plugin.dataManager.setTodayEarned(player, 0);   // 清空当日获得的奖励
             }
 
-            // 规则性检查
-            if (plugin.isExcludeAfk && ExternalAPI.isPlayerAFK(player)) continue;
+            // 规则检查
+            if (plugin.isExcludeAfk && ExternalAPI.isPlayerAFK(player, plugin)) continue;
             if (plugin.isEnableDailyLimit && plugin.dataManager.getTodayEarned(player) >= plugin.dailyLimit) {
                 continue;
             }

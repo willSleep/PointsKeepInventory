@@ -34,14 +34,16 @@ public class CommandManager implements CommandExecutor {
 
         if (args.length == 0 || (args.length == 1 && args[0].equals("help"))) {
             p.sendMessage(ChatColor.GRAY + "pki指令集帮助");
-            p.sendMessage(ChatColor.YELLOW + "enable " + ChatColor.GREEN + "启用死亡不掉落");
-            p.sendMessage(ChatColor.YELLOW + "disable" + ChatColor.GREEN + "禁用死亡不掉落");
+            p.sendMessage(ChatColor.YELLOW + "enable    " + ChatColor.GREEN + "启用死亡不掉落");
+            p.sendMessage(ChatColor.YELLOW + "disable   " + ChatColor.GREEN + "禁用死亡不掉落");
+            p.sendMessage(ChatColor.YELLOW + "info      " + ChatColor.GREEN + "查询积分信息");
+            p.sendMessage(ChatColor.YELLOW + "help      " + ChatColor.GREEN + "显示此帮助");
         }
 
         if (args.length == 1 && args[0].equals("enable")) {
             plugin.dataManager.setPKIStatus(p, true);
             p.sendMessage(String.format(
-                    "§a[PKI]死亡不掉落已启用 (剩余积分: %d)",
+                    "§3[PKI]死亡不掉落已启用 (剩余积分: %d)",
                     plugin.dataManager.getPoints(p)
             ));
             return true;
@@ -49,18 +51,40 @@ public class CommandManager implements CommandExecutor {
 
         if (args.length == 1 && args[0].equals("disable")) {
             plugin.dataManager.setPKIStatus(p, false);
-            p.sendMessage("§a[PKI]死亡不掉落已禁用");
+            p.sendMessage("§3[PKI]死亡不掉落已禁用");
             return true;
+        }
+
+        if (args.length == 1 && args[0].equals("info")) {
+            p.sendMessage("§8§ 积分信息 §");
+            p.sendMessage(String.format(
+                    "§3剩余积分: §n%d",
+                    plugin.dataManager.getPoints(p)
+            ));
+            p.sendMessage(String.format(
+                    "§3当日获取积分: §n%d",
+                    plugin.dataManager.getTodayEarned(p)
+            ));
+            p.sendMessage(String.format(
+                    "§3死亡不掉落价格: §n%d 积分/次",
+                    plugin.points_per_keep_inventory
+            ));
+            p.sendMessage(String.format(
+                    "§3死亡不掉落开启状态: §n%s",
+                    plugin.dataManager.getPKStatus(p)?"开启":"关闭"
+            ));
+            if(plugin.dataManager.getTodayEarned(p) >= plugin.dailyLimit) {
+                p.sendMessage(ChatColor.RED + "积分已达每日赚取上限");
+            }
         }
 
         return false;
     }
 
     private boolean executePKIM(CommandSender sender, String[] args) {
-        Player p = (Player) sender;
         if (args.length == 0 || (args.length == 1 && args[0].equals("help"))) {
-            p.sendMessage(ChatColor.GRAY + "pkim指令集帮助");
-            p.sendMessage(ChatColor.YELLOW + "reload " + ChatColor.GREEN + "热重载配置文件");
+            sender.sendMessage(ChatColor.GRAY + "pkim指令集帮助");
+            sender.sendMessage(ChatColor.YELLOW + "reload " + ChatColor.GREEN + "热重载配置文件");
         }
 
         if (args.length == 1 && args[0].equals("reload")) {
@@ -68,7 +92,7 @@ public class CommandManager implements CommandExecutor {
             plugin.initializeConfig();
             plugin.rewardTask.start();   // 重启任务
             plugin.rewardTask.isFirstRule = true;
-            p.sendMessage(ChatColor.GREEN + "配置文件已重载 :)");
+            sender.sendMessage(ChatColor.GREEN + "配置文件已重载 :)");
 
             return true;
 

@@ -34,12 +34,12 @@ public class dataManager {
      * @param player 玩家对象
      * @return 玩家积分数
      */
-    public int getPoints(Player player) {
+    public Long getPoints(Player player) {
         // 如果未存储过数据,默认返回0
         return player.getPersistentDataContainer().getOrDefault(
                 pointsKey,
-                PersistentDataType.INTEGER,
-                0
+                PersistentDataType.LONG,
+                0L
         );
     }
 
@@ -48,11 +48,11 @@ public class dataManager {
      * @param player 玩家对象
      * @param amount 增量
      */
-    public void addPoints(Player player, int amount) {
-        int currentPoints = getPoints(player);
+    public void addPoints(Player player, long amount) {
+        long currentPoints = getPoints(player);
         player.getPersistentDataContainer().set(
                 pointsKey,
-                PersistentDataType.INTEGER,
+                PersistentDataType.LONG,
                 currentPoints + amount
         );
     }
@@ -173,15 +173,6 @@ public class dataManager {
         } catch (IOException e) {
             plugin.getLogger().severe("无法创建 exclusion_list.yml: " + e.getMessage());
         }
-    }
-
-    /**
-     * 判断玩家对象是否在排除列表中
-     * @param player 玩家对象
-     * @return 是否在排除列表中
-     */
-    public boolean isInExclusionList(Player player) {
-        return false;   // TODO: 写完
     }
 
     /**

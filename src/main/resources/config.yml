@@ -4,18 +4,18 @@
 # 经济系统
 economic-system:
   # 在线时长和积分的等价交换系数(mins/per-point)
-  price: 5
+  price: 1
 
   # 周期侦听延迟(分钟)
-  listen-frequency: 10
+  listen-frequency: 1
 
   # 每次死亡不掉落消耗的积分数
-  points-per-keep-inventory: 2
+  points-per-keep-inventory: 1
 
   # 每日积分上限
   daily-limit:
     enable: true
-    limit: 1
+    limit: 5
 
 # 死亡不掉落范围
 item-type:
@@ -24,11 +24,6 @@ item-type:
 others:
   # 是否开启死亡不掉落的缺省值
   default-status: true
-
-  # 排除列表
-  exclusion-list:
-    # 是否启用
-    enable: true
 
   # 排除AFK玩家
   # 要求安装EssentialsX插件,否则该功能无法正确启用
